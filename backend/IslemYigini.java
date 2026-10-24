@@ -1,11 +1,11 @@
 package backend;
-class StackNode {(
+class StackNode {
     Object islemData ;
     StackNode next ;
 
-    public StackNode(Object ıslemData){
-        this.ıslemData= ıslemData;
-        this next= null;
+    public StackNode(Object islemData){
+        this.islemData= islemData;
+        this.next= null;
 
     }
 }
@@ -27,7 +27,7 @@ public class IslemYigini {
     }
 
     public Object geriAl(){
-        if (top = null){
+        if (top == null){
             System.out.println("geri alınacak işlem yok");
             return null;
         }
