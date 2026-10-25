@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [musteriAdi, setMusteriAdi] = useState('');
   const [rezervasyonlar, setRezervasyonlar] = useState<string[]>([]);
-  const rezervasyonYap = (e: React.FormEvent) => {
+  const rezervasyonYap = (e) => {
     e.preventDefault();
     if (!musteriAdi.trim()) return;
     //Yığına ekleme
@@ -23,58 +23,60 @@ function App() {
     alert(cikarilan + " için yapılan rezervasyon geri alındı");
   };
   return (
-    <div style={{ padding: '20px 0', fontFamily: 'Arial' }} >
-      <div>App</div>
-      <hr style={{ margin: '20px 0' }} />
+    <div className='flex flex-col items-center justify-center h-screen'>
+      <div className='w-full h-fit p-4 flex items-center justify-center bg-[#f0ebe0] font-bold text-blue-500 text-lg border-b-2'>Otel Rezervasyon</div>
 
-      {/*--Yağmur'un görevi--*/}
-      <div style={{ border: '1px solid #3b82f6', padding: '20px', borderRadius: '8px', background: '#f8fafc' }}>
-        <h3 style={{ color: '#f23b81' }}> Konaklama&Rezervasyon Paneli</h3>
+      <div className='flex w-full h-full justify-center items-center bg-[#e8e7e7]'>
+        {/*--Yağmur ve SametK görevi--*/}
+        <div className='flex flex-col w-fit h-fit bg-[#f0ebe0] shadow-lg text-black p-5 rounded-2xl gap-5'>
+          <h3 className='text-2xl'> Rezervasyon Paneli</h3>
 
-        {/* ÜST MENÜ (GERİ AL/ KAYDET)*/}
-        <div style={{ marginBottom: '15px' }}>
-          <button style={{ marginRight: '10px', padding: '6px 12px', background: '#f23b81', color: '#fff', border: 'none', borderRadius: '4px' }}>
-            Dosyaya Kaydet
-          </button>
-          <button
-            type='button'
-            onClick={geriAl}
-            style={{ padding: '6px 12px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-            Geri Al
-          </button>
-        </div>
-
-        {/*REZERVASYON EKLEME FORMU*/}
-        <form onSubmit={rezervasyonYap}>
-          <div style={{ marginBottom: '10px' }}>
-            <label>
-              Müşteri Ad/Soyad:
-            </label>
-            <input
-              type='text'
-              value={musteriAdi}
-              onChange={(e) => setMusteriAdi(e.target.value)}
-              placeholder='Adınızı Giriniz'
-              style={{ padding: '6px', marginLeft: '10px', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-            <button type='submit' style={{ padding: '6px 14px', background: '#f23b81', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold' }}>
-              Kaydet
+          {/*REZERVASYON EKLEME FORMU*/}
+          <form onSubmit={rezervasyonYap}>
+            <div className='flex flex-col gap-4'>
+              <div>
+                Müşteri Ad/Soyad:
+              </div>
+              <input
+                type='text'
+                value={musteriAdi}
+                onChange={(e) => setMusteriAdi(e.target.value)}
+                placeholder='Adınızı Giriniz'
+                className='w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-700 outline-none transition-all'></input>
+              <button type='submit' className='bg-green-500 rounded-2xl p-2 text-white hover:bg-green-700 cursor-pointer transition-all'>
+                Kaydet
+              </button>
+            </div>
+          </form>
+          {/* ALT MENÜ (GERİ AL/ KAYDET)*/}
+          <div className='flex flex-1 gap-2'>
+            <button className='bg-blue-500 text-white p-2 rounded-2xl cursor-pointer hover:bg-blue-700 transition-all'>
+              Dosyaya Kaydet
+            </button>
+            <button
+              type='button'
+              onClick={geriAl}
+              className='bg-red-600 text-white p-2 rounded-2xl cursor-pointer hover:bg-red-900 transition-all'
+            >
+              Geri Al
             </button>
           </div>
-        </form>
 
-        {/* AKTİF REZERVASYON LİSTESİ*/}
-        <div style={{ marginTop: '15px', padding: '10px', background: '#fff', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
-          <h4 style={{ margin: '0 0 8px 0', color: '#334155' }}>Aktif Rezervasyon Yığını (Stack):</h4>
-          {rezervasyonlar.length === 0 ? (
-            <p style={{ color: '#94a3b8', margin: 0, fontSize: '14px' }}>Eklenen rezervasyon yok</p>
-          ) : (
-            <ul style={{ margin: 0, paddingLeft: '20px' }}>{rezervasyonlar.map((rez, index) => (
-              <li key={index} style={{ fontSize: '14px', color: '#1e293b' }}> {rez} </li>
-            ))}
-            </ul>
-          )}
-        </div>
-      </div >
+          {/* AKTİF REZERVASYON LİSTESİ*/}
+          <div className='bg-white rounded-lg w-fit h-fit p-3'>
+            <h4 className='text-lg w-50'>Aktif Rezervasyonlar :</h4>
+            {rezervasyonlar.length === 0 ? (
+              <p className='text-gray-400'>Eklenen rezervasyon yok</p>
+            ) : (
+              <ul className='text-gray-500'>{rezervasyonlar.map((rez, index) => (
+                <li key={index} > {index+1+"-"+rez} </li>
+              ))}
+              </ul>
+            )}
+          </div>
+        </div >
+
+      </div>
     </div >
   );
 }
