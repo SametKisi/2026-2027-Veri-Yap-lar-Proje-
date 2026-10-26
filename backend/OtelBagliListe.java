@@ -2,7 +2,7 @@ package backend;
 
 public class OtelBagliListe {
 
-    // LİSTENİN İLK VE SON DÜĞÜMÜNÜ VE ELEMAN SAYISINI TUTAN DEĞİŞKENLER.
+    // - LİSTENİN İLK VE SON DÜĞÜMÜNÜ VE ELEMAN SAYISINI TUTAN DEĞİŞKENLER.
     private OtelNode head;
     private OtelNode tail;
     private int elemanSayisi;
@@ -14,17 +14,18 @@ public class OtelBagliListe {
     }
 
 
-    
+
     public void ekle(Otel yeniOtel) {
         OtelNode yeniVagon = new OtelNode(yeniOtel);
 
-        // EĞER LİSTE BOŞSA EKLENEN DÜĞÜM HEM BAŞ HEM DE SON DÜĞÜM OLUR.
+        // - EĞER LİSTE BOŞSA EKLENEN DÜĞÜM HEM BAŞ HEM DE SON DÜĞÜM OLUR.
         if (head == null) {
             head = yeniVagon;
             tail = yeniVagon;
         }
 
-        // EĞER LİSTE DOLUYSA EKLENEN DÜĞÜMÜ EN SONA ÇİFT YÖNLÜ BAĞLA VE TAİLİ GÜNCELLE.
+        // - EĞER LİSTE DOLUYSA EKLENEN DÜĞÜMÜ EN SONA ÇİFT YÖNLÜ BAĞLA VE TAİLİ
+        // GÜNCELLE.
         else {
             tail.next = yeniVagon;
             yeniVagon.prev = tail;
@@ -43,15 +44,16 @@ public class OtelBagliListe {
             return;
         }
 
-        // LİSTEYİ GEZMEK İÇİN GEÇİCİ DÜĞÜMÜ İLK DÜĞÜME EŞİTLEDİK.
+        // - LİSTEYİ GEZMEK İÇİN GEÇİCİ DÜĞÜMÜ İLK DÜĞÜME EŞİTLEDİK.
         OtelNode temp = head;
         System.out.println("----- KAYITLI OTELLER -----");
 
-        // SON DÜĞÜMÜ GEÇENE KADAR TÜM DÜĞÜMLERİ DOLAŞ.
+        // - SON DÜĞÜMÜ GEÇENE KADAR TÜM DÜĞÜMLERİ DOLAŞ.
         while (temp != null) {
-            System.out.println("ID: " + temp.veri.getId() + " | Otel Adı: " + temp.veri.getAd() + " | Şehir: " + temp.veri.getSehir() + " | Fiyat: " + temp.veri.getFiyat());
+            System.out.println("ID: " + temp.veri.getId() + " | Otel Adı: " + temp.veri.getAd() + " | Şehir: "
+                    + temp.veri.getSehir() + " | Fiyat: " + temp.veri.getFiyat());
 
-            // BİR SONRAKİ DÜĞÜME İLERLE.
+            // - BİR SONRAKİ DÜĞÜME İLERLE.
             temp = temp.next;
         }
 
@@ -73,21 +75,25 @@ public class OtelBagliListe {
             return;
         }
 
+        // - LİSTEDE 1 ELEMAN VARSA.
         if (temp == head && temp == tail) {
             head = null;
             tail = null;
         }
 
+        // - SİLİNECEK ELEMAN HEAD'DE İSE.
         else if (temp == head) {
             head = head.next;
             head.prev = null;
         }
 
+        // - SİLİNECEK ELEMAN TAİL'DA İSE.
         else if (temp == tail) {
             tail = tail.prev;
             tail.next = null;
         }
 
+        // - SİLİNECEK ELEMAN ARADAKİ BİR DÜĞÜMSE.
         else {
             temp.prev.next = temp.next;
             temp.next.prev = temp.prev;
@@ -113,13 +119,15 @@ public class OtelBagliListe {
             return;
         }
 
+        // - GÜNCELLEME YAPILACAK OTELİN VERİLERİNİ SET METOTLARIYLA GÜNCELLEME.
         temp.veri.setAd(yeniAd);
         temp.veri.setSehir(yeniSehir);
         System.out.println(guncellenecekId + " ID'li otel bilgileri güncellendi.");
     }
 
-    
 
+    
+    // - DOSYA YÖNETİCİSİ İÇİN.
     public OtelNode getHead() {
         return head;
     }

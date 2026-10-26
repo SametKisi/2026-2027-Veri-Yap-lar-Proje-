@@ -1,11 +1,11 @@
 package backend;
 
-//ATA SINIF.
+// - ATA SINIF.
 public abstract class TemelKayit {
 
     private int id;
-    
-    public TemelKayit (int id) {
+
+    public TemelKayit(int id) {
         this.id = id;
     }
 
@@ -13,6 +13,6 @@ public abstract class TemelKayit {
         return id;
     }
 
-    //DAHA SONRA ALT SINIFLARDA DOLACAKTIR.
+    // - DAHA SONRA ALT SINIFLARDA DOLACAKTIR.
     public abstract String dosyaSatiriCevir();
 }
