@@ -53,5 +53,17 @@ public class FiyatBST {
         return new Otel(id, ad, sehir, fiyat);
 
     }
+    public void enPahaliOteliGoster(){
+        if(kok==null){
+            System.out.println("Aradiginiz otel sistemde bulunamadı");
+            return;
+        }
+        TreeNode mevcut=kok;
+        // BST kurali geregi en buyuk yani fiyati en yuksek olan en sagdaki dugumdur o da right dir.
+        while (mevcut.right!=null){
+            mevcut=mevcut.right;
+        }
+        System.out.println("En pahali otel: "+mevcut.otel.getAd()+ "| Fiyat: "+mevcut.otel.getFiyat()+" TL");
+    }
 
 }
