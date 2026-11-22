@@ -1,25 +1,31 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+
 
 function App() {
+  useEffect(() => {
+    axios.get('/api/rezervasyon').then(res => setRezervasyonlar(res.data));
+  }, []);
+
   const [musteriAdi, setMusteriAdi] = useState('');
   const [rezervasyonlar, setRezervasyonlar] = useState<string[]>([]);
-  const rezervasyonYap = (e) => {
+  
+  const rezervasyonYap = async (e) => {
     e.preventDefault();
-    if (!musteriAdi.trim()) return;
-    //Yığına ekleme
-    setRezervasyonlar([...rezervasyonlar, musteriAdi]);
-    alert(musteriAdi + " için rezervasyon oluşturuldu.");
+    if (!musteriAdi.trim()) return;//boş satır ile giriş yapılamaz
+    const res = await axios.post('/api/rezervasyon', { musteriAdi });
+    setRezervasyonlar(res.data);
     setMusteriAdi('');
   };
   //Geri alma
-  const geriAl = () => {
+  const geriAl = async() => {
     if (rezervasyonlar.length === 0) {
       alert("Geri alınacak işlem yok");
       return;
     }
-    const yeniListe = [...rezervasyonlar];
-    const cikarilan = yeniListe.pop();
-    setRezervasyonlar(yeniListe);
+    const cikarilan = rezervasyonlar[rezervasyonlar.length-1]
+    const res = await axios.delete('/api/rezervasyon');
+    setRezervasyonlar(res.data);
     alert(cikarilan + " için yapılan rezervasyon geri alındı");
   };
   return (
