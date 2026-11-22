@@ -127,6 +127,35 @@ public class OtelBagliListe {
 
 
     
+    public void sehireGoreListele(String sehir) {
+
+        if (head == null) {
+            System.out.println("Otel listesi şu an boş.");
+            return;
+        }
+
+        // - LİSTEYİ BAŞTAN SONA GEZMEK İÇİN GEÇİCİ İŞARETÇİ VE EŞLEŞME KONTROLÜ.
+        OtelNode temp = head;
+        boolean bulundu = false;
+
+        System.out.println("----- " + sehir.toUpperCase() + " ŞEHRİNDEKİ OTELLER -----");
+
+        while (temp != null) {
+            // - BÜYÜK/KÜÇÜK HARF DUYARLILIĞI OLMADAN ŞEHİR KARŞILAŞTIRMASI.
+            if (temp.veri.getSehir().equalsIgnoreCase(sehir)) {
+                System.out.println(temp.veri);
+                bulundu = true;
+            }
+            temp = temp.next;
+        }
+
+        if (!bulundu) {
+            System.out.println(sehir + " şehrinde kayıtlı otel bulunamadı.");
+        }
+    }
+
+
+    
     // - DOSYA YÖNETİCİSİ İÇİN.
     public OtelNode getHead() {
         return head;
