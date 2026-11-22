@@ -1,9 +1,8 @@
 package backend;
+import com.sun.net.httpserver.HttpServer;
 
 public class main {
-    public static void main(String[] args) {
-
-
+    public static void main(String[] args) throws Exception {
 
         // - SAMET KİŞİ EKLEDİ.
         RezervasyonKuyrugu rezervasyonKuyrugu = new RezervasyonKuyrugu();
@@ -83,6 +82,39 @@ public class main {
         dosyaYoneticisi.otelleriOku(dosyadanGelenListe);
 
         dosyadanGelenListe.listele();
-    }
+        
 
+        //Backend frontend entegrasyonu
+        RezervasyonKuyrugu apiKuyruk = new RezervasyonKuyrugu();
+        apiBaslat(apiKuyruk);
+
+        
+    }
+    
+    static void apiBaslat(RezervasyonKuyrugu kuyruk) throws Exception {
+        HttpServer server = HttpServer.create(new java.net.InetSocketAddress(8080), 0);
+
+        server.createContext("/api/rezervasyon", ex -> {
+            String metod = ex.getRequestMethod();
+
+            if (metod.equals("POST")) {
+                String body = new String(ex.getRequestBody().readAllBytes());
+                kuyruk.ekle(body.split("\"")[3]);
+            } else if (metod.equals("DELETE")) {
+                kuyruk.kaldir();
+            }
+
+            cevapGonder(ex, kuyruk.hepsi());
+        });
+
+        server.start();
+    }
+    static void cevapGonder(com.sun.net.httpserver.HttpExchange ex, java.util.List<String> liste) throws java.io.IOException {
+        String json = "[" + String.join(",", liste.stream().map(x -> "\"" + x + "\"").toList()) + "]";
+        byte[] b = json.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        ex.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
+        ex.sendResponseHeaders(200, b.length);
+        ex.getResponseBody().write(b);
+        ex.close();
+    }
 }
