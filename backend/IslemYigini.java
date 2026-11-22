@@ -44,4 +44,11 @@ public class IslemYigini {
         return top == null;
     }
 
+    public void sonIslemiGor() {
+        if (top == null) {
+            System.out.println("Yığın boş işlem yok");
+            return;
+        }
+        System.out.println("son işlem:" + top.islemData);
+    }
 }
